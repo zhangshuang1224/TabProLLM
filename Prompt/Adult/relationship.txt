@@ -1,0 +1,94 @@
+请你生成 30162 条记录补充在原数据集后面，生成字段包括 relationship，并保持以下类别分布结构。
+
+数据生成过程应遵循以下关键流程：
+
+1️.首先根据目标类别分布，生成各列数据，确保每一列类别分布严格符合给定目标比例，允许单个类别占比在目标值 ±0.1% 范围内浮动；
+
+2️.在保证各列类别分布基本不变的前提下，调整变量之间的联合分布结构；
+
+3️.在联合分布调整过程中，允许通过构建条件概率分布并采用顺序采样方式，逐步生成整行数据，以提高联合分布的合理性和拟合能力，拟合误差 <2%，优先保证主类别准确；
+
+4️.对生成数据施加边界限制，确保所有类别符合定义，且数据中不得包含缺失值（NaN）；
+
+5️.允许通过多轮迭代对数据进行调整优化，调整过程中不得重新采样单变量分布；
+
+6️.最终生成的数据应保持所有类别限定在指定集合内，不能出现未定义类别，且不得包含缺失值（NaN）。
+
+7.将生成的 relationship 列按行对齐补充到原数据集中，作为新增字段 relationship，保持原数据行数不变，不得新增行或改变原数据行顺序。
+
+#### 变量 `marital-status` 的类别分布：
+- 46.632% 的数据类别为 `Married-civ-spouse`；
+- 32.246% 的数据类别为 `Never-married`；
+- 13.971% 的数据类别为 `Divorced`；
+- 3.113% 的数据类别为 `Separated`；
+- 2.742% 的数据类别为 `Widowed`；
+- 1.227% 的数据类别为 `Married-spouse-absent`；
+- 0.07% 的数据类别为 `Married-AF-spouse`；
+所有生成的数据，必须限定在上述类别集合内，且类别分布应严格匹配。
+
+
+#### 变量 `relationship` 的类别分布：
+- 41.32% 的数据类别为 `Husband`；
+- 25.615% 的数据类别为 `Not-in-family`；
+- 14.807% 的数据类别为 `Own-child`；
+- 10.649% 的数据类别为 `Unmarried`；
+- 4.661% 的数据类别为 `Wife`；
+- 2.947% 的数据类别为 `Other-relative`；
+所有生成的数据，必须限定在上述类别集合内，且类别分布应严格匹配。
+
+#### 条件概率分布 P(`relationship` | `marital-status`)：
+- `marital-status` = `Divorced` 时：
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Divorced`) ≈ 53.8206%
+    - P(`relationship` = `Unmarried` | `marital-status` = `Divorced`) ≈ 36.4262%
+    - P(`relationship` = `Own-child` | `marital-status` = `Divorced`) ≈ 7.3090%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Divorced`) ≈ 2.4442%
+    - P(`relationship` = `Husband` | `marital-status` = `Divorced`) ≈ 0.0000%
+    - P(`relationship` = `Wife` | `marital-status` = `Divorced`) ≈ 0.0000%
+
+- `marital-status` = `Married-AF-spouse` 时：
+    - P(`relationship` = `Wife` | `marital-status` = `Married-AF-spouse`) ≈ 47.6190%
+    - P(`relationship` = `Husband` | `marital-status` = `Married-AF-spouse`) ≈ 42.8571%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Married-AF-spouse`) ≈ 4.7619%
+    - P(`relationship` = `Own-child` | `marital-status` = `Married-AF-spouse`) ≈ 4.7619%
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Married-AF-spouse`) ≈ 0.0000%
+    - P(`relationship` = `Unmarried` | `marital-status` = `Married-AF-spouse`) ≈ 0.0000%
+
+- `marital-status` = `Married-civ-spouse` 时：
+    - P(`relationship` = `Husband` | `marital-status` = `Married-civ-spouse`) ≈ 88.5460%
+    - P(`relationship` = `Wife` | `marital-status` = `Married-civ-spouse`) ≈ 9.9253%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Married-civ-spouse`) ≈ 0.8390%
+    - P(`relationship` = `Own-child` | `marital-status` = `Married-civ-spouse`) ≈ 0.5901%
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Married-civ-spouse`) ≈ 0.0995%
+    - P(`relationship` = `Unmarried` | `marital-status` = `Married-civ-spouse`) ≈ 0.0000%
+
+- `marital-status` = `Married-spouse-absent` 时：
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Married-spouse-absent`) ≈ 48.9189%
+    - P(`relationship` = `Unmarried` | `marital-status` = `Married-spouse-absent`) ≈ 32.4324%
+    - P(`relationship` = `Own-child` | `marital-status` = `Married-spouse-absent`) ≈ 11.6216%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Married-spouse-absent`) ≈ 7.0270%
+    - P(`relationship` = `Husband` | `marital-status` = `Married-spouse-absent`) ≈ 0.0000%
+    - P(`relationship` = `Wife` | `marital-status` = `Married-spouse-absent`) ≈ 0.0000%
+
+- `marital-status` = `Never-married` 时：
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Never-married`) ≈ 45.7331%
+    - P(`relationship` = `Own-child` | `marital-status` = `Never-married`) ≈ 40.3969%
+    - P(`relationship` = `Unmarried` | `marital-status` = `Never-married`) ≈ 8.2357%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Never-married`) ≈ 5.6344%
+    - P(`relationship` = `Husband` | `marital-status` = `Never-married`) ≈ 0.0000%
+    - P(`relationship` = `Wife` | `marital-status` = `Never-married`) ≈ 0.0000%
+
+- `marital-status` = `Separated` 时：
+    - P(`relationship` = `Unmarried` | `marital-status` = `Separated`) ≈ 43.9830%
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Separated`) ≈ 40.7881%
+    - P(`relationship` = `Own-child` | `marital-status` = `Separated`) ≈ 9.5847%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Separated`) ≈ 5.6443%
+    - P(`relationship` = `Husband` | `marital-status` = `Separated`) ≈ 0.0000%
+    - P(`relationship` = `Wife` | `marital-status` = `Separated`) ≈ 0.0000%
+
+- `marital-status` = `Widowed` 时：
+    - P(`relationship` = `Not-in-family` | `marital-status` = `Widowed`) ≈ 52.2370%
+    - P(`relationship` = `Unmarried` | `marital-status` = `Widowed`) ≈ 41.4752%
+    - P(`relationship` = `Other-relative` | `marital-status` = `Widowed`) ≈ 4.8368%
+    - P(`relationship` = `Own-child` | `marital-status` = `Widowed`) ≈ 1.4510%
+    - P(`relationship` = `Husband` | `marital-status` = `Widowed`) ≈ 0.0000%
+    - P(`relationship` = `Wife` | `marital-status` = `Widowed`) ≈ 0.0000%

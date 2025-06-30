@@ -1,0 +1,152 @@
+请你生成 30162 条记录补充在原数据集后面，生成字段包括 education，并保持以下类别分布结构。
+
+数据生成过程应遵循以下关键流程：
+
+1️.首先根据目标类别分布，生成各列数据，确保每一列类别分布严格符合给定目标比例，允许单个类别占比在目标值 ±0.1% 范围内浮动；
+
+2️.在保证各列类别分布基本不变的前提下，调整变量之间的联合分布结构；
+
+3️.在联合分布调整过程中，允许通过构建条件概率分布并采用顺序采样方式，逐步生成整行数据，以提高联合分布的合理性和拟合能力，拟合误差 <2%，优先保证主类别准确；
+
+4️.对生成数据施加边界限制，确保所有类别符合定义，且数据中不得包含缺失值（NaN）；
+
+5️.允许通过多轮迭代对数据进行调整优化，调整过程中不得重新采样单变量分布；
+
+6️.最终生成的数据应保持所有类别限定在指定集合内，不能出现未定义类别，且不得包含缺失值（NaN）。
+
+7.最终将 age_group 列删除，将生成的 education 列按行对齐补充到原数据集中，作为新增字段 education，保持原数据行数不变，不得新增行或改变原数据行顺序。
+
+#### 变量 `age_group` 的类别分布：
+- 27.050% 的数据类别为 `25-34`；
+- 25.759% 的数据类别为 `35-44`；
+- 17.899% 的数据类别为 `17-24`；
+- 17.768% 的数据类别为 `45-54`；
+- 8.712% 的数据类别为 `55-64`；
+- 2.812% 的数据类别为 `65-90`；
+
+#### 变量 `education` 的类别分布：
+- 32.624% 的数据类别为 `HS-grad`；
+- 22.140% 的数据类别为 `Some-college`；
+- 16.723% 的数据类别为 `Bachelors`；
+- 5.394% 的数据类别为 `Masters`；
+- 4.333% 的数据类别为 `Assoc-voc`；
+- 3.475% 的数据类别为 `11th`；
+- 3.342% 的数据类别为 `Assoc-acdm`；
+- 2.719% 的数据类别为 `10th`；
+- 1.847% 的数据类别为 `7th-8th`；
+- 1.797% 的数据类别为 `Prof-school`；
+- 1.509% 的数据类别为 `9th`；
+- 1.250% 的数据类别为 `12th`；
+- 1.243% 的数据类别为 `Doctorate`；
+- 0.955% 的数据类别为 `5th-6th`；
+- 0.501% 的数据类别为 `1st-4th`；
+- 0.149% 的数据类别为 `Preschool`；
+
+#### 条件概率分布 P(`education` | `age_group`)：
+- `age_group` = `17-24` 时：
+    - P(`education` = `Some-college` | `age_group` = `17-24`) ≈ 34.5131%
+    - P(`education` = `HS-grad` | `age_group` = `17-24`) ≈ 32.3034%
+    - P(`education` = `Bachelors` | `age_group` = `17-24`) ≈ 12.1348%
+    - P(`education` = `11th` | `age_group` = `17-24`) ≈ 5.7116%
+    - P(`education` = `Assoc-voc` | `age_group` = `17-24`) ≈ 2.9213%
+    - P(`education` = `Assoc-acdm` | `age_group` = `17-24`) ≈ 2.7341%
+    - P(`education` = `12th` | `age_group` = `17-24`) ≈ 2.5843%
+    - P(`education` = `10th` | `age_group` = `17-24`) ≈ 2.4157%
+    - P(`education` = `9th` | `age_group` = `17-24`) ≈ 1.3296%
+    - P(`education` = `7th-8th` | `age_group` = `17-24`) ≈ 1.0300%
+    - P(`education` = `5th-6th` | `age_group` = `17-24`) ≈ 0.8801%
+    - P(`education` = `Masters` | `age_group` = `17-24`) ≈ 0.8240%
+    - P(`education` = `1st-4th` | `age_group` = `17-24`) ≈ 0.3745%
+    - P(`education` = `Preschool` | `age_group` = `17-24`) ≈ 0.1685%
+    - P(`education` = `Prof-school` | `age_group` = `17-24`) ≈ 0.0562%
+    - P(`education` = `Doctorate` | `age_group` = `17-24`) ≈ 0.0187%
+
+- `age_group` = `25-34` 时：
+    - P(`education` = `HS-grad` | `age_group` = `25-34`) ≈ 34.4981%
+    - P(`education` = `Some-college` | `age_group` = `25-34`) ≈ 20.3717%
+    - P(`education` = `Bachelors` | `age_group` = `25-34`) ≈ 19.8637%
+    - P(`education` = `Assoc-voc` | `age_group` = `25-34`) ≈ 5.3408%
+    - P(`education` = `Masters` | `age_group` = `25-34`) ≈ 4.1884%
+    - P(`education` = `Assoc-acdm` | `age_group` = `25-34`) ≈ 4.0149%
+    - P(`education` = `11th` | `age_group` = `25-34`) ≈ 2.5898%
+    - P(`education` = `10th` | `age_group` = `25-34`) ≈ 2.1437%
+    - P(`education` = `Prof-school` | `age_group` = `25-34`) ≈ 1.4870%
+    - P(`education` = `9th` | `age_group` = `25-34`) ≈ 1.2763%
+    - P(`education` = `7th-8th` | `age_group` = `25-34`) ≈ 1.1896%
+    - P(`education` = `12th` | `age_group` = `25-34`) ≈ 1.0037%
+    - P(`education` = `Doctorate` | `age_group` = `25-34`) ≈ 0.8426%
+    - P(`education` = `5th-6th` | `age_group` = `25-34`) ≈ 0.7559%
+    - P(`education` = `1st-4th` | `age_group` = `25-34`) ≈ 0.3222%
+    - P(`education` = `Preschool` | `age_group` = `25-34`) ≈ 0.1115%
+
+- `age_group` = `35-44` 时：
+    - P(`education` = `HS-grad` | `age_group` = `35-44`) ≈ 31.2947%
+    - P(`education` = `Some-college` | `age_group` = `35-44`) ≈ 20.7807%
+    - P(`education` = `Bachelors` | `age_group` = `35-44`) ≈ 19.3754%
+    - P(`education` = `Masters` | `age_group` = `35-44`) ≈ 7.4691%
+    - P(`education` = `Assoc-voc` | `age_group` = `35-44`) ≈ 5.2180%
+    - P(`education` = `Assoc-acdm` | `age_group` = `35-44`) ≈ 4.0859%
+    - P(`education` = `Prof-school` | `age_group` = `35-44`) ≈ 2.5895%
+    - P(`education` = `11th` | `age_group` = `35-44`) ≈ 1.9388%
+    - P(`education` = `10th` | `age_group` = `35-44`) ≈ 1.6916%
+    - P(`education` = `Doctorate` | `age_group` = `35-44`) ≈ 1.3663%
+    - P(`education` = `9th` | `age_group` = `35-44`) ≈ 1.1451%
+    - P(`education` = `7th-8th` | `age_group` = `35-44`) ≈ 1.0020%
+    - P(`education` = `5th-6th` | `age_group` = `35-44`) ≈ 0.7938%
+    - P(`education` = `12th` | `age_group` = `35-44`) ≈ 0.7027%
+    - P(`education` = `1st-4th` | `age_group` = `35-44`) ≈ 0.4294%
+    - P(`education` = `Preschool` | `age_group` = `35-44`) ≈ 0.1171%
+
+- `age_group` = `45-54` 时：
+    - P(`education` = `HS-grad` | `age_group` = `45-54`) ≈ 33.0692%
+    - P(`education` = `Some-college` | `age_group` = `45-54`) ≈ 18.8644%
+    - P(`education` = `Bachelors` | `age_group` = `45-54`) ≈ 16.0158%
+    - P(`education` = `Masters` | `age_group` = `45-54`) ≈ 8.7342%
+    - P(`education` = `Assoc-voc` | `age_group` = `45-54`) ≈ 4.1313%
+    - P(`education` = `Assoc-acdm` | `age_group` = `45-54`) ≈ 3.1315%
+    - P(`education` = `10th` | `age_group` = `45-54`) ≈ 2.5278%
+    - P(`education` = `Prof-school` | `age_group` = `45-54`) ≈ 2.4524%
+    - P(`education` = `11th` | `age_group` = `45-54`) ≈ 2.4146%
+    - P(`education` = `7th-8th` | `age_group` = `45-54`) ≈ 2.3015%
+    - P(`education` = `Doctorate` | `age_group` = `45-54`) ≈ 2.2637%
+    - P(`education` = `9th` | `age_group` = `45-54`) ≈ 1.4526%
+    - P(`education` = `5th-6th` | `age_group` = `45-54`) ≈ 1.1319%
+    - P(`education` = `12th` | `age_group` = `45-54`) ≈ 0.6980%
+    - P(`education` = `1st-4th` | `age_group` = `45-54`) ≈ 0.6037%
+    - P(`education` = `Preschool` | `age_group` = `45-54`) ≈ 0.2075%
+
+- `age_group` = `55-64` 时：
+    - P(`education` = `HS-grad` | `age_group` = `55-64`) ≈ 34.4363%
+    - P(`education` = `Some-college` | `age_group` = `55-64`) ≈ 17.3913%
+    - P(`education` = `Bachelors` | `age_group` = `55-64`) ≈ 13.2359%
+    - P(`education` = `Masters` | `age_group` = `55-64`) ≈ 6.1177%
+    - P(`education` = `7th-8th` | `age_group` = `55-64`) ≈ 5.4636%
+    - P(`education` = `10th` | `age_group` = `55-64`) ≈ 4.2324%
+    - P(`education` = `11th` | `age_group` = `55-64`) ≈ 3.0012%
+    - P(`education` = `Assoc-voc` | `age_group` = `55-64`) ≈ 2.9627%
+    - P(`education` = `9th` | `age_group` = `55-64`) ≈ 2.7318%
+    - P(`education` = `Prof-school` | `age_group` = `55-64`) ≈ 2.4240%
+    - P(`education` = `Doctorate` | `age_group` = `55-64`) ≈ 2.1162%
+    - P(`education` = `Assoc-acdm` | `age_group` = `55-64`) ≈ 1.9238%
+    - P(`education` = `5th-6th` | `age_group` = `55-64`) ≈ 1.6545%
+    - P(`education` = `12th` | `age_group` = `55-64`) ≈ 1.1158%
+    - P(`education` = `1st-4th` | `age_group` = `55-64`) ≈ 1.0773%
+    - P(`education` = `Preschool` | `age_group` = `55-64`) ≈ 0.1154%
+
+- `age_group` = `65-90` 时：
+    - P(`education` = `HS-grad` | `age_group` = `65-90`) ≈ 32.3004%
+    - P(`education` = `Some-college` | `age_group` = `65-90`) ≈ 16.6865%
+    - P(`education` = `Bachelors` | `age_group` = `65-90`) ≈ 13.2300%
+    - P(`education` = `7th-8th` | `age_group` = `65-90`) ≈ 7.3897%
+    - P(`education` = `Masters` | `age_group` = `65-90`) ≈ 5.8403%
+    - P(`education` = `10th` | `age_group` = `65-90`) ≈ 4.5292%
+    - P(`education` = `Prof-school` | `age_group` = `65-90`) ≈ 3.2181%
+    - P(`education` = `Doctorate` | `age_group` = `65-90`) ≈ 3.0989%
+    - P(`education` = `11th` | `age_group` = `65-90`) ≈ 2.9797%
+    - P(`education` = `Assoc-voc` | `age_group` = `65-90`) ≈ 2.7414%
+    - P(`education` = `9th` | `age_group` = `65-90`) ≈ 2.6222%
+    - P(`education` = `5th-6th` | `age_group` = `65-90`) ≈ 1.7878%
+    - P(`education` = `1st-4th` | `age_group` = `65-90`) ≈ 1.4303%
+    - P(`education` = `Assoc-acdm` | `age_group` = `65-90`) ≈ 0.9535%
+    - P(`education` = `12th` | `age_group` = `65-90`) ≈ 0.7151%
+    - P(`education` = `Preschool` | `age_group` = `65-90`) ≈ 0.4768%

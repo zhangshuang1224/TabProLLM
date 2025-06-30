@@ -1,0 +1,355 @@
+请你生成 30162 条记录补充在原数据集后面，生成字段包括 race，并保持以下类别分布结构。
+
+数据生成过程应遵循以下关键流程：
+
+1️.首先根据目标类别分布，生成各列数据，确保每一列类别分布严格符合给定目标比例，允许单个类别占比在目标值 ±0.1% 范围内浮动；
+
+2️.在保证各列类别分布基本不变的前提下，调整变量之间的联合分布结构；
+
+3️.在联合分布调整过程中，允许通过构建条件概率分布并采用顺序采样方式，逐步生成整行数据，以提高联合分布的合理性和拟合能力，拟合误差 <2%，优先保证主类别准确；
+
+4️.对生成数据施加边界限制，确保所有类别符合定义，且数据中不得包含缺失值（NaN）；
+
+5️.允许通过多轮迭代对数据进行调整优化，调整过程中不得重新采样单变量分布；
+
+6️.最终生成的数据应保持所有类别限定在指定集合内，不能出现未定义类别，且不得包含缺失值（NaN）。
+
+7.将生成的 race 列按行对齐补充到原数据集中，作为新增字段 race，保持原数据行数不变，不得新增行或改变原数据行顺序。
+
+#### 变量 `native-country` 的类别分布：
+- 91.188% 的数据类别为 `United-States`；
+- 2.022% 的数据类别为 `Mexico`；
+- 0.623% 的数据类别为 `Philippines`；
+- 0.424% 的数据类别为 `Germany`；
+- 0.361% 的数据类别为 `Puerto-Rico`；
+- 0.355% 的数据类别为 `Canada`；
+- 0.332% 的数据类别为 `India`；
+- 0.332% 的数据类别为 `El-Salvador`；
+- 0.305% 的数据类别为 `Cuba`；
+- 0.285% 的数据类别为 `England`；
+- 0.265% 的数据类别为 `Jamaica`；
+- 0.235% 的数据类别为 `South`；
+- 0.225% 的数据类别为 `China`；
+- 0.225% 的数据类别为 `Italy`；
+- 0.222% 的数据类别为 `Dominican-Republic`；
+- 0.212% 的数据类别为 `Vietnam`；
+- 0.209% 的数据类别为 `Guatemala`；
+- 0.196% 的数据类别为 `Japan`；
+- 0.186% 的数据类别为 `Poland`；
+- 0.186% 的数据类别为 `Columbia`；
+- 0.139% 的数据类别为 `Iran`；
+- 0.139% 的数据类别为 `Taiwan`；
+- 0.139% 的数据类别为 `Haiti`；
+- 0.113% 的数据类别为 `Portugal`；
+- 0.109% 的数据类别为 `Nicaragua`；
+- 0.099% 的数据类别为 `Peru`；
+- 0.096% 的数据类别为 `Greece`；
+- 0.090% 的数据类别为 `France`；
+- 0.090% 的数据类别为 `Ecuador`；
+- 0.080% 的数据类别为 `Ireland`；
+- 0.063% 的数据类别为 `Hong`；
+- 0.060% 的数据类别为 `Cambodia`；
+- 0.060% 的数据类别为 `Trinadad&Tobago`；
+- 0.056% 的数据类别为 `Thailand`；
+- 0.056% 的数据类别为 `Laos`；
+- 0.053% 的数据类别为 `Yugoslavia`；
+- 0.046% 的数据类别为 `Outlying-US(Guam-USVI-etc)`；
+- 0.043% 的数据类别为 `Hungary`；
+- 0.040% 的数据类别为 `Honduras`；
+- 0.036% 的数据类别为 `Scotland`；
+- 0.003% 的数据类别为 `Holand-Netherlands`；
+
+#### 变量 `race` 的类别分布：
+- 85.979% 的数据类别为 `White`；
+- 9.340% 的数据类别为 `Black`；
+- 2.967% 的数据类别为 `Asian-Pac-Islander`；
+- 0.948% 的数据类别为 `Amer-Indian-Eskimo`；
+- 0.766% 的数据类别为 `Other`；
+
+#### 条件概率分布 P(`race` | `native-country`)：
+- `native-country` = `Cambodia` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Cambodia`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Cambodia`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Cambodia`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Cambodia`) ≈ 0.0000%
+    - P(`race` = `White` | `native-country` = `Cambodia`) ≈ 0.0000%
+
+- `native-country` = `Canada` 时：
+    - P(`race` = `White` | `native-country` = `Canada`) ≈ 98.1308%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Canada`) ≈ 0.9346%
+    - P(`race` = `Other` | `native-country` = `Canada`) ≈ 0.9346%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Canada`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Canada`) ≈ 0.0000%
+
+- `native-country` = `China` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `China`) ≈ 97.0588%
+    - P(`race` = `White` | `native-country` = `China`) ≈ 2.9412%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `China`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `China`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `China`) ≈ 0.0000%
+
+- `native-country` = `Columbia` 时：
+    - P(`race` = `White` | `native-country` = `Columbia`) ≈ 87.5000%
+    - P(`race` = `Other` | `native-country` = `Columbia`) ≈ 10.7143%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Columbia`) ≈ 1.7857%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Columbia`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Columbia`) ≈ 0.0000%
+
+- `native-country` = `Cuba` 时：
+    - P(`race` = `White` | `native-country` = `Cuba`) ≈ 94.5652%
+    - P(`race` = `Black` | `native-country` = `Cuba`) ≈ 3.2609%
+    - P(`race` = `Other` | `native-country` = `Cuba`) ≈ 2.1739%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Cuba`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Cuba`) ≈ 0.0000%
+
+- `native-country` = `Dominican-Republic` 时：
+    - P(`race` = `White` | `native-country` = `Dominican-Republic`) ≈ 53.7313%
+    - P(`race` = `Other` | `native-country` = `Dominican-Republic`) ≈ 26.8657%
+    - P(`race` = `Black` | `native-country` = `Dominican-Republic`) ≈ 17.9104%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Dominican-Republic`) ≈ 1.4925%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Dominican-Republic`) ≈ 0.0000%
+
+- `native-country` = `Ecuador` 时：
+    - P(`race` = `White` | `native-country` = `Ecuador`) ≈ 66.6667%
+    - P(`race` = `Other` | `native-country` = `Ecuador`) ≈ 33.3333%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Ecuador`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Ecuador`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Ecuador`) ≈ 0.0000%
+
+- `native-country` = `El-Salvador` 时：
+    - P(`race` = `White` | `native-country` = `El-Salvador`) ≈ 95.0000%
+    - P(`race` = `Other` | `native-country` = `El-Salvador`) ≈ 4.0000%
+    - P(`race` = `Black` | `native-country` = `El-Salvador`) ≈ 1.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `El-Salvador`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `El-Salvador`) ≈ 0.0000%
+
+- `native-country` = `England` 时：
+    - P(`race` = `White` | `native-country` = `England`) ≈ 90.6977%
+    - P(`race` = `Black` | `native-country` = `England`) ≈ 8.1395%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `England`) ≈ 1.1628%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `England`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `England`) ≈ 0.0000%
+
+- `native-country` = `France` 时：
+    - P(`race` = `White` | `native-country` = `France`) ≈ 96.2963%
+    - P(`race` = `Black` | `native-country` = `France`) ≈ 3.7037%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `France`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `France`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `France`) ≈ 0.0000%
+
+- `native-country` = `Germany` 时：
+    - P(`race` = `White` | `native-country` = `Germany`) ≈ 92.1875%
+    - P(`race` = `Black` | `native-country` = `Germany`) ≈ 4.6875%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Germany`) ≈ 1.5625%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Germany`) ≈ 0.7812%
+    - P(`race` = `Other` | `native-country` = `Germany`) ≈ 0.7812%
+
+- `native-country` = `Greece` 时：
+    - P(`race` = `White` | `native-country` = `Greece`) ≈ 96.5517%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Greece`) ≈ 3.4483%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Greece`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Greece`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Greece`) ≈ 0.0000%
+
+- `native-country` = `Guatemala` 时：
+    - P(`race` = `White` | `native-country` = `Guatemala`) ≈ 93.6508%
+    - P(`race` = `Other` | `native-country` = `Guatemala`) ≈ 6.3492%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Guatemala`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Guatemala`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Guatemala`) ≈ 0.0000%
+
+- `native-country` = `Haiti` 时：
+    - P(`race` = `Black` | `native-country` = `Haiti`) ≈ 97.6190%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Haiti`) ≈ 2.3810%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Haiti`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Haiti`) ≈ 0.0000%
+    - P(`race` = `White` | `native-country` = `Haiti`) ≈ 0.0000%
+
+- `native-country` = `Holand-Netherlands` 时：
+    - P(`race` = `White` | `native-country` = `Holand-Netherlands`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Holand-Netherlands`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Holand-Netherlands`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Holand-Netherlands`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Holand-Netherlands`) ≈ 0.0000%
+
+- `native-country` = `Honduras` 时：
+    - P(`race` = `White` | `native-country` = `Honduras`) ≈ 91.6667%
+    - P(`race` = `Black` | `native-country` = `Honduras`) ≈ 8.3333%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Honduras`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Honduras`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Honduras`) ≈ 0.0000%
+
+- `native-country` = `Hong` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Hong`) ≈ 84.2105%
+    - P(`race` = `White` | `native-country` = `Hong`) ≈ 10.5263%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Hong`) ≈ 5.2632%
+    - P(`race` = `Black` | `native-country` = `Hong`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Hong`) ≈ 0.0000%
+
+- `native-country` = `Hungary` 时：
+    - P(`race` = `White` | `native-country` = `Hungary`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Hungary`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Hungary`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Hungary`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Hungary`) ≈ 0.0000%
+
+- `native-country` = `India` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `India`) ≈ 85.0000%
+    - P(`race` = `White` | `native-country` = `India`) ≈ 8.0000%
+    - P(`race` = `Other` | `native-country` = `India`) ≈ 5.0000%
+    - P(`race` = `Black` | `native-country` = `India`) ≈ 2.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `India`) ≈ 0.0000%
+
+- `native-country` = `Iran` 时：
+    - P(`race` = `White` | `native-country` = `Iran`) ≈ 80.9524%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Iran`) ≈ 14.2857%
+    - P(`race` = `Other` | `native-country` = `Iran`) ≈ 4.7619%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Iran`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Iran`) ≈ 0.0000%
+
+- `native-country` = `Ireland` 时：
+    - P(`race` = `White` | `native-country` = `Ireland`) ≈ 95.8333%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Ireland`) ≈ 4.1667%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Ireland`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Ireland`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Ireland`) ≈ 0.0000%
+
+- `native-country` = `Italy` 时：
+    - P(`race` = `White` | `native-country` = `Italy`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Italy`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Italy`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Italy`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Italy`) ≈ 0.0000%
+
+- `native-country` = `Jamaica` 时：
+    - P(`race` = `Black` | `native-country` = `Jamaica`) ≈ 92.5000%
+    - P(`race` = `White` | `native-country` = `Jamaica`) ≈ 6.2500%
+    - P(`race` = `Other` | `native-country` = `Jamaica`) ≈ 1.2500%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Jamaica`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Jamaica`) ≈ 0.0000%
+
+- `native-country` = `Japan` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Japan`) ≈ 62.7119%
+    - P(`race` = `White` | `native-country` = `Japan`) ≈ 30.5085%
+    - P(`race` = `Black` | `native-country` = `Japan`) ≈ 5.0847%
+    - P(`race` = `Other` | `native-country` = `Japan`) ≈ 1.6949%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Japan`) ≈ 0.0000%
+
+- `native-country` = `Laos` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Laos`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Laos`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Laos`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Laos`) ≈ 0.0000%
+    - P(`race` = `White` | `native-country` = `Laos`) ≈ 0.0000%
+
+- `native-country` = `Mexico` 时：
+    - P(`race` = `White` | `native-country` = `Mexico`) ≈ 91.6393%
+    - P(`race` = `Other` | `native-country` = `Mexico`) ≈ 6.2295%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Mexico`) ≈ 1.3115%
+    - P(`race` = `Black` | `native-country` = `Mexico`) ≈ 0.6557%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Mexico`) ≈ 0.1639%
+
+- `native-country` = `Nicaragua` 时：
+    - P(`race` = `White` | `native-country` = `Nicaragua`) ≈ 81.8182%
+    - P(`race` = `Other` | `native-country` = `Nicaragua`) ≈ 12.1212%
+    - P(`race` = `Black` | `native-country` = `Nicaragua`) ≈ 6.0606%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Nicaragua`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Nicaragua`) ≈ 0.0000%
+
+- `native-country` = `Outlying-US(Guam-USVI-etc)` 时：
+    - P(`race` = `White` | `native-country` = `Outlying-US(Guam-USVI-etc)`) ≈ 57.1429%
+    - P(`race` = `Black` | `native-country` = `Outlying-US(Guam-USVI-etc)`) ≈ 42.8571%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Outlying-US(Guam-USVI-etc)`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Outlying-US(Guam-USVI-etc)`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Outlying-US(Guam-USVI-etc)`) ≈ 0.0000%
+
+- `native-country` = `Peru` 时：
+    - P(`race` = `White` | `native-country` = `Peru`) ≈ 96.6667%
+    - P(`race` = `Other` | `native-country` = `Peru`) ≈ 3.3333%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Peru`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Peru`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Peru`) ≈ 0.0000%
+
+- `native-country` = `Philippines` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Philippines`) ≈ 94.6809%
+    - P(`race` = `White` | `native-country` = `Philippines`) ≈ 4.2553%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Philippines`) ≈ 0.5319%
+    - P(`race` = `Black` | `native-country` = `Philippines`) ≈ 0.5319%
+    - P(`race` = `Other` | `native-country` = `Philippines`) ≈ 0.0000%
+
+- `native-country` = `Poland` 时：
+    - P(`race` = `White` | `native-country` = `Poland`) ≈ 98.2143%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Poland`) ≈ 1.7857%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Poland`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Poland`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Poland`) ≈ 0.0000%
+
+- `native-country` = `Portugal` 时：
+    - P(`race` = `White` | `native-country` = `Portugal`) ≈ 97.0588%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Portugal`) ≈ 2.9412%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Portugal`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Portugal`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Portugal`) ≈ 0.0000%
+
+- `native-country` = `Puerto-Rico` 时：
+    - P(`race` = `White` | `native-country` = `Puerto-Rico`) ≈ 71.5596%
+    - P(`race` = `Other` | `native-country` = `Puerto-Rico`) ≈ 18.3486%
+    - P(`race` = `Black` | `native-country` = `Puerto-Rico`) ≈ 8.2569%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Puerto-Rico`) ≈ 0.9174%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Puerto-Rico`) ≈ 0.9174%
+
+- `native-country` = `Scotland` 时：
+    - P(`race` = `White` | `native-country` = `Scotland`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Scotland`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Scotland`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Scotland`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Scotland`) ≈ 0.0000%
+
+- `native-country` = `South` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `South`) ≈ 95.7746%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `South`) ≈ 2.8169%
+    - P(`race` = `White` | `native-country` = `South`) ≈ 1.4085%
+    - P(`race` = `Black` | `native-country` = `South`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `South`) ≈ 0.0000%
+
+- `native-country` = `Taiwan` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Taiwan`) ≈ 95.2381%
+    - P(`race` = `White` | `native-country` = `Taiwan`) ≈ 4.7619%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Taiwan`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Taiwan`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Taiwan`) ≈ 0.0000%
+
+- `native-country` = `Thailand` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Thailand`) ≈ 88.2353%
+    - P(`race` = `White` | `native-country` = `Thailand`) ≈ 11.7647%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Thailand`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Thailand`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Thailand`) ≈ 0.0000%
+
+- `native-country` = `Trinadad&Tobago` 时：
+    - P(`race` = `Black` | `native-country` = `Trinadad&Tobago`) ≈ 83.3333%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Trinadad&Tobago`) ≈ 11.1111%
+    - P(`race` = `Other` | `native-country` = `Trinadad&Tobago`) ≈ 5.5556%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Trinadad&Tobago`) ≈ 0.0000%
+    - P(`race` = `White` | `native-country` = `Trinadad&Tobago`) ≈ 0.0000%
+
+- `native-country` = `United-States` 时：
+    - P(`race` = `White` | `native-country` = `United-States`) ≈ 88.0526%
+    - P(`race` = `Black` | `native-country` = `United-States`) ≈ 9.5586%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `United-States`) ≈ 0.9926%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `United-States`) ≈ 0.9853%
+    - P(`race` = `Other` | `native-country` = `United-States`) ≈ 0.4108%
+
+- `native-country` = `Vietnam` 时：
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Vietnam`) ≈ 96.8750%
+    - P(`race` = `White` | `native-country` = `Vietnam`) ≈ 3.1250%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Vietnam`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Vietnam`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Vietnam`) ≈ 0.0000%
+
+- `native-country` = `Yugoslavia` 时：
+    - P(`race` = `White` | `native-country` = `Yugoslavia`) ≈ 100.0000%
+    - P(`race` = `Amer-Indian-Eskimo` | `native-country` = `Yugoslavia`) ≈ 0.0000%
+    - P(`race` = `Asian-Pac-Islander` | `native-country` = `Yugoslavia`) ≈ 0.0000%
+    - P(`race` = `Black` | `native-country` = `Yugoslavia`) ≈ 0.0000%
+    - P(`race` = `Other` | `native-country` = `Yugoslavia`) ≈ 0.0000%

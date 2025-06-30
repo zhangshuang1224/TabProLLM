@@ -1,0 +1,164 @@
+请你生成 20640 条记录补充在原数据集后面，生成字段包括 ocean_proximity，并保持以下类别分布结构。
+
+数据生成过程应遵循以下关键流程：
+
+1️.首先根据目标类别分布，生成各列数据，确保每一列类别分布严格符合给定目标比例，允许单个类别占比在目标值 ±0.1% 范围内浮动；
+
+2️.在保证各列类别分布基本不变的前提下，调整变量之间的联合分布结构；
+
+3️.在联合分布调整过程中，允许通过构建条件概率分布并采用顺序采样方式，逐步生成整行数据，以提高联合分布的合理性和拟合能力，拟合误差 <2%，优先保证主类别准确；
+
+4️.对生成数据施加边界限制，确保所有类别符合定义，且数据中不得包含缺失值（NaN）；
+
+5️.允许通过多轮迭代对数据进行调整优化，调整过程中不得重新采样单变量分布；
+
+6️.最终生成的数据应保持所有类别限定在指定集合内，不能出现未定义类别，且不得包含缺失值（NaN）。
+
+7️.最终将 geo_bin 列删除，将生成的 ocean_proximity 列按行对齐补充到原数据集中，作为新增字段 ocean_proximity，保持原数据行数不变，不得新增行或改变原数据行顺序。
+
+#### 变量 `ocean_proximity` 的类别分布：
+- 44.264% 的数据类别为 `<1H OCEAN`；
+- 31.739% 的数据类别为 `INLAND`；
+- 12.878% 的数据类别为 `NEAR OCEAN`；
+- 11.095% 的数据类别为 `NEAR BAY`；
+- 0.024% 的数据类别为 `ISLAND`；
+所有生成的数据，必须限定在上述类别集合内，且类别分布应严格匹配。
+
+#### 变量 `geo_bin` 的类别分布：
+geo_bin 字段格式为 "longitude_min--longitude_max_latitude_min-latitude_max"，表示对应记录所属的经纬度区间（地理分箱），其中：
+- 前半段 longitude_min--longitude_max 为longitude区间
+- 后半段 latitude_min-latitude_max 为latitude区间
+例如 geo_bin = "-116.0--114.31_32.539-34.0" 表示该记录位于longitude -116.0 到 -114.31，latitude 32.539 到 34.0 区间内。
+geo_bin 用于划分空间分区，指导 ocean_proximity 的条件采样，不能作为最终数据字段保留。
+
+- 0.644% 的数据类别为 `-116.0--114.31_32.539-34.0`；
+- 0.068% 的数据类别为 `-116.0--114.31_34.0-36.0`；
+- 17.699% 的数据类别为 `-118.0--116.0_32.539-34.0`；
+- 6.187% 的数据类别为 `-118.0--116.0_34.0-36.0`；
+- 0.015% 的数据类别为 `-118.0--116.0_36.0-38.0`；
+- 12.229% 的数据类别为 `-120.0--118.0_32.539-34.0`；
+- 19.021% 的数据类别为 `-120.0--118.0_34.0-36.0`；
+- 4.215% 的数据类别为 `-120.0--118.0_36.0-38.0`；
+- 0.16% 的数据类别为 `-120.0--118.0_38.0-40.0`；
+- 1.4% 的数据类别为 `-122.0--120.0_34.0-36.0`；
+- 10.218% 的数据类别为 `-122.0--120.0_36.0-38.0`；
+- 8.275% 的数据类别为 `-122.0--120.0_38.0-40.0`；
+- 0.325% 的数据类别为 `-122.0--120.0_40.0-41.95`；
+- 13.697% 的数据类别为 `-124.351--122.0_36.0-38.0`；
+- 4.176% 的数据类别为 `-124.351--122.0_38.0-40.0`；
+- 1.672% 的数据类别为 `-124.351--122.0_40.0-41.95`；
+所有生成的数据，必须限定在上述 geo_bin 集合内，且 geo_bin 应根据经纬度划分合理。
+
+#### 条件概率分布 P(`ocean_proximity` | `geo_bin`)：
+
+- `geo_bin` = `-116.0--114.31_32.539-34.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-116.0--114.31_32.539-34.0`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-116.0--114.31_32.539-34.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-116.0--114.31_32.539-34.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-116.0--114.31_32.539-34.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-116.0--114.31_32.539-34.0`) ≈ 0.0000%
+
+- `geo_bin` = `-116.0--114.31_34.0-36.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-116.0--114.31_34.0-36.0`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-116.0--114.31_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-116.0--114.31_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-116.0--114.31_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-116.0--114.31_34.0-36.0`) ≈ 0.0000%
+
+- `geo_bin` = `-118.0--116.0_32.539-34.0` 时：
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-118.0--116.0_32.539-34.0`) ≈ 55.6529%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-118.0--116.0_32.539-34.0`) ≈ 29.7564%
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-118.0--116.0_32.539-34.0`) ≈ 14.5907%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-118.0--116.0_32.539-34.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-118.0--116.0_32.539-34.0`) ≈ 0.0000%
+
+- `geo_bin` = `-118.0--116.0_34.0-36.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-118.0--116.0_34.0-36.0`) ≈ 81.9107%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-118.0--116.0_34.0-36.0`) ≈ 18.0893%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-118.0--116.0_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-118.0--116.0_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-118.0--116.0_34.0-36.0`) ≈ 0.0000%
+
+- `geo_bin` = `-118.0--116.0_36.0-38.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-118.0--116.0_36.0-38.0`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-118.0--116.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-118.0--116.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-118.0--116.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-118.0--116.0_36.0-38.0`) ≈ 0.0000%
+
+- `geo_bin` = `-120.0--118.0_32.539-34.0` 时：
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-120.0--118.0_32.539-34.0`) ≈ 85.8558%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-120.0--118.0_32.539-34.0`) ≈ 13.9461%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-120.0--118.0_32.539-34.0`) ≈ 0.1981%
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-120.0--118.0_32.539-34.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-120.0--118.0_32.539-34.0`) ≈ 0.0000%
+
+- `geo_bin` = `-120.0--118.0_34.0-36.0` 时：
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-120.0--118.0_34.0-36.0`) ≈ 76.3627%
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-120.0--118.0_34.0-36.0`) ≈ 16.3525%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-120.0--118.0_34.0-36.0`) ≈ 7.2848%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-120.0--118.0_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-120.0--118.0_34.0-36.0`) ≈ 0.0000%
+
+- `geo_bin` = `-120.0--118.0_36.0-38.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-120.0--118.0_36.0-38.0`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-120.0--118.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-120.0--118.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-120.0--118.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-120.0--118.0_36.0-38.0`) ≈ 0.0000%
+
+- `geo_bin` = `-120.0--118.0_38.0-40.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-120.0--118.0_38.0-40.0`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-120.0--118.0_38.0-40.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-120.0--118.0_38.0-40.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-120.0--118.0_38.0-40.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-120.0--118.0_38.0-40.0`) ≈ 0.0000%
+
+- `geo_bin` = `-122.0--120.0_34.0-36.0` 时：
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-122.0--120.0_34.0-36.0`) ≈ 51.9031%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-122.0--120.0_34.0-36.0`) ≈ 46.3668%
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-122.0--120.0_34.0-36.0`) ≈ 1.7301%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-122.0--120.0_34.0-36.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-122.0--120.0_34.0-36.0`) ≈ 0.0000%
+
+- `geo_bin` = `-122.0--120.0_36.0-38.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-122.0--120.0_36.0-38.0`) ≈ 49.4547%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-122.0--120.0_36.0-38.0`) ≈ 45.7089%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-122.0--120.0_36.0-38.0`) ≈ 4.8364%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-122.0--120.0_36.0-38.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-122.0--120.0_36.0-38.0`) ≈ 0.0000%
+
+- `geo_bin` = `-122.0--120.0_38.0-40.0` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-122.0--120.0_38.0-40.0`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-122.0--120.0_38.0-40.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-122.0--120.0_38.0-40.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-122.0--120.0_38.0-40.0`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-122.0--120.0_38.0-40.0`) ≈ 0.0000%
+
+- `geo_bin` = `-122.0--120.0_40.0-41.95` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-122.0--120.0_40.0-41.95`) ≈ 100.0000%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-122.0--120.0_40.0-41.95`) ≈ 0.0000%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-122.0--120.0_40.0-41.95`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-122.0--120.0_40.0-41.95`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-122.0--120.0_40.0-41.95`) ≈ 0.0000%
+
+- `geo_bin` = `-124.351--122.0_36.0-38.0` 时：
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-124.351--122.0_36.0-38.0`) ≈ 73.2579%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-124.351--122.0_36.0-38.0`) ≈ 19.7736%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-124.351--122.0_36.0-38.0`) ≈ 6.6502%
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-124.351--122.0_36.0-38.0`) ≈ 0.3184%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-124.351--122.0_36.0-38.0`) ≈ 0.0000%
+
+- `geo_bin` = `-124.351--122.0_38.0-40.0` 时：
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-124.351--122.0_38.0-40.0`) ≈ 43.0394%
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-124.351--122.0_38.0-40.0`) ≈ 27.9582%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-124.351--122.0_38.0-40.0`) ≈ 25.4060%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-124.351--122.0_38.0-40.0`) ≈ 3.5963%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-124.351--122.0_38.0-40.0`) ≈ 0.0000%
+
+- `geo_bin` = `-124.351--122.0_40.0-41.95` 时：
+    - P(`ocean_proximity` = `INLAND` | `geo_bin` = `-124.351--122.0_40.0-41.95`) ≈ 59.1304%
+    - P(`ocean_proximity` = `NEAR OCEAN` | `geo_bin` = `-124.351--122.0_40.0-41.95`) ≈ 31.0145%
+    - P(`ocean_proximity` = `<1H OCEAN` | `geo_bin` = `-124.351--122.0_40.0-41.95`) ≈ 9.8551%
+    - P(`ocean_proximity` = `ISLAND` | `geo_bin` = `-124.351--122.0_40.0-41.95`) ≈ 0.0000%
+    - P(`ocean_proximity` = `NEAR BAY` | `geo_bin` = `-124.351--122.0_40.0-41.95`) ≈ 0.0000%

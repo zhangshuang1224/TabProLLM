@@ -1,0 +1,70 @@
+请你生成 30162 条记录补充在原数据集后面，生成字段包括 occupation，并保持以下类别分布结构。
+
+数据生成过程应遵循以下关键流程：
+
+1️.首先根据目标类别分布，生成各列数据，确保每一列类别分布严格符合给定目标比例，允许单个类别占比在目标值 ±0.1% 范围内浮动；
+
+2️.在保证各列类别分布基本不变的前提下，调整变量之间的联合分布结构；
+
+3️.在联合分布调整过程中，允许通过构建条件概率分布并采用顺序采样方式，逐步生成整行数据，以提高联合分布的合理性和拟合能力，拟合误差 <2%，优先保证主类别准确；
+
+4️.对生成数据施加边界限制，确保所有类别符合定义，且数据中不得包含缺失值（NaN）；
+
+5️.允许通过多轮迭代对数据进行调整优化，调整过程中不得重新采样单变量分布；
+
+6️.最终生成的数据应保持所有类别限定在指定集合内，不能出现未定义类别，且不得包含缺失值（NaN）。
+
+7.将生成的 occupation 列按行对齐补充到原数据集中，作为新增字段 occupation，保持原数据行数不变，不得新增行或改变原数据行顺序。
+
+#### 变量 `sex` 的类别分布：
+- 67.568% 的数据类别为 `Male`；
+- 32.432% 的数据类别为 `Female`；
+
+#### 变量 `occupation` 的类别分布：
+- 13.388% 的数据类别为 `Prof-specialty`；
+- 13.361% 的数据类别为 `Craft-repair`；
+- 13.235% 的数据类别为 `Exec-managerial`；
+- 12.337% 的数据类别为 `Adm-clerical`；
+- 11.883% 的数据类别为 `Sales`；
+- 10.649% 的数据类别为 `Other-service`；
+- 6.518% 的数据类别为 `Machine-op-inspct`；
+- 5.212% 的数据类别为 `Transport-moving`；
+- 4.476% 的数据类别为 `Handlers-cleaners`；
+- 3.279% 的数据类别为 `Farming-fishing`；
+- 3.024% 的数据类别为 `Tech-support`；
+- 2.135% 的数据类别为 `Protective-serv`；
+- 0.474% 的数据类别为 `Priv-house-serv`；
+- 0.030% 的数据类别为 `Armed-Forces`；
+
+#### 条件概率分布 P(`occupation` | `sex`)：
+- `sex` = `Female` 时：
+    - P(`occupation` = `Adm-clerical` | `sex` = `Female`) ≈ 25.6798%
+    - P(`occupation` = `Other-service` | `sex` = `Female`) ≈ 17.9718%
+    - P(`occupation` = `Prof-specialty` | `sex` = `Female`) ≈ 15.2423%
+    - P(`occupation` = `Sales` | `sex` = `Female`) ≈ 12.7581%
+    - P(`occupation` = `Exec-managerial` | `sex` = `Female`) ≈ 11.6847%
+    - P(`occupation` = `Machine-op-inspct` | `sex` = `Female`) ≈ 5.5510%
+    - P(`occupation` = `Tech-support` | `sex` = `Female`) ≈ 3.4860%
+    - P(`occupation` = `Craft-repair` | `sex` = `Female`) ≈ 2.2081%
+    - P(`occupation` = `Handlers-cleaners` | `sex` = `Female`) ≈ 1.6765%
+    - P(`occupation` = `Priv-house-serv` | `sex` = `Female`) ≈ 1.3801%
+    - P(`occupation` = `Transport-moving` | `sex` = `Female`) ≈ 0.9201%
+    - P(`occupation` = `Protective-serv` | `sex` = `Female`) ≈ 0.7769%
+    - P(`occupation` = `Farming-fishing` | `sex` = `Female`) ≈ 0.6645%
+    - P(`occupation` = `Armed-Forces` | `sex` = `Female`) ≈ 0.0000%
+
+- `sex` = `Male` 时：
+    - P(`occupation` = `Craft-repair` | `sex` = `Male`) ≈ 18.7144%
+    - P(`occupation` = `Exec-managerial` | `sex` = `Male`) ≈ 13.9794%
+    - P(`occupation` = `Prof-specialty` | `sex` = `Male`) ≈ 12.4975%
+    - P(`occupation` = `Sales` | `sex` = `Male`) ≈ 11.4622%
+    - P(`occupation` = `Transport-moving` | `sex` = `Male`) ≈ 7.2718%
+    - P(`occupation` = `Other-service` | `sex` = `Male`) ≈ 7.1344%
+    - P(`occupation` = `Machine-op-inspct` | `sex` = `Male`) ≈ 6.9823%
+    - P(`occupation` = `Adm-clerical` | `sex` = `Male`) ≈ 5.9323%
+    - P(`occupation` = `Handlers-cleaners` | `sex` = `Male`) ≈ 5.8194%
+    - P(`occupation` = `Farming-fishing` | `sex` = `Male`) ≈ 4.5339%
+    - P(`occupation` = `Tech-support` | `sex` = `Male`) ≈ 2.8018%
+    - P(`occupation` = `Protective-serv` | `sex` = `Male`) ≈ 2.7870%
+    - P(`occupation` = `Armed-Forces` | `sex` = `Male`) ≈ 0.0442%
+    - P(`occupation` = `Priv-house-serv` | `sex` = `Male`) ≈ 0.0393%

@@ -1,0 +1,81 @@
+请你生成 30162 条记录补充在原数据集后面，生成字段包括 marital-status，并保持以下类别分布结构。
+
+数据生成过程应遵循以下关键流程：
+
+1️.首先根据目标类别分布，生成各列数据，确保每一列类别分布严格符合给定目标比例，允许单个类别占比在目标值 ±0.1% 范围内浮动；
+
+2️.在保证各列类别分布基本不变的前提下，调整变量之间的联合分布结构；
+
+3️.在联合分布调整过程中，允许通过构建条件概率分布并采用顺序采样方式，逐步生成整行数据，以提高联合分布的合理性和拟合能力，拟合误差 <2%，优先保证主类别准确；
+
+4️.对生成数据施加边界限制，确保所有类别符合定义，且数据中不得包含缺失值（NaN）；
+
+5️.允许通过多轮迭代对数据进行调整优化，调整过程中不得重新采样单变量分布；
+
+6️.最终生成的数据应保持所有类别限定在指定集合内，不能出现未定义类别，且不得包含缺失值（NaN）。
+
+7.最终将 age_group 列删除，将生成的 marital-status 列按行对齐补充到原数据集中，作为新增字段 marital-status，保持原数据行数不变，不得新增行或改变原数据行顺序。
+
+#### marital-status 类别分布：
+- 46.632% 的数据类别为 `Married-civ-spouse`；
+- 32.246% 的数据类别为 `Never-married`；
+- 13.971% 的数据类别为 `Divorced`；
+- 3.113% 的数据类别为 `Separated`；
+- 2.742% 的数据类别为 `Widowed`；
+- 1.227% 的数据类别为 `Married-spouse-absent`；
+- 0.070% 的数据类别为 `Married-AF-spouse`；
+
+#### 条件概率分布 P(`marital-status` | `age_group`)：
+- `age_group` = `17-24` 时：
+    - P(`marital-status` = `Never-married` | `age_group` = `17-24`) ≈ 83.4644%
+    - P(`marital-status` = `Married-civ-spouse` | `age_group` = `17-24`) ≈ 11.8165%
+    - P(`marital-status` = `Divorced` | `age_group` = `17-24`) ≈ 2.2472%
+    - P(`marital-status` = `Separated` | `age_group` = `17-24`) ≈ 1.5356%
+    - P(`marital-status` = `Married-spouse-absent` | `age_group` = `17-24`) ≈ 0.8052%
+    - P(`marital-status` = `Married-AF-spouse` | `age_group` = `17-24`) ≈ 0.0749%
+    - P(`marital-status` = `Widowed` | `age_group` = `17-24`) ≈ 0.0562%
+
+- `age_group` = `25-34` 时：
+    - P(`marital-status` = `Married-civ-spouse` | `age_group` = `25-34`) ≈ 44.6592%
+    - P(`marital-status` = `Never-married` | `age_group` = `25-34`) ≈ 38.4263%
+    - P(`marital-status` = `Divorced` | `age_group` = `25-34`) ≈ 11.5985%
+    - P(`marital-status` = `Separated` | `age_group` = `25-34`) ≈ 3.4944%
+    - P(`marital-status` = `Married-spouse-absent` | `age_group` = `25-34`) ≈ 1.2763%
+    - P(`marital-status` = `Widowed` | `age_group` = `25-34`) ≈ 0.3841%
+    - P(`marital-status` = `Married-AF-spouse` | `age_group` = `25-34`) ≈ 0.1611%
+
+- `age_group` = `35-44` 时：
+    - P(`marital-status` = `Married-civ-spouse` | `age_group` = `35-44`) ≈ 57.2934%
+    - P(`marital-status` = `Divorced` | `age_group` = `35-44`) ≈ 20.4164%
+    - P(`marital-status` = `Never-married` | `age_group` = `35-44`) ≈ 15.5498%
+    - P(`marital-status` = `Separated` | `age_group` = `35-44`) ≈ 4.1770%
+    - P(`marital-status` = `Married-spouse-absent` | `age_group` = `35-44`) ≈ 1.2752%
+    - P(`marital-status` = `Widowed` | `age_group` = `35-44`) ≈ 1.2492%
+    - P(`marital-status` = `Married-AF-spouse` | `age_group` = `35-44`) ≈ 0.0390%
+
+- `age_group` = `45-54` 时：
+    - P(`marital-status` = `Married-civ-spouse` | `age_group` = `45-54`) ≈ 62.6297%
+    - P(`marital-status` = `Divorced` | `age_group` = `45-54`) ≈ 20.5056%
+    - P(`marital-status` = `Never-married` | `age_group` = `45-54`) ≈ 7.9230%
+    - P(`marital-status` = `Widowed` | `age_group` = `45-54`) ≈ 3.8672%
+    - P(`marital-status` = `Separated` | `age_group` = `45-54`) ≈ 3.4333%
+    - P(`marital-status` = `Married-spouse-absent` | `age_group` = `45-54`) ≈ 1.6223%
+    - P(`marital-status` = `Married-AF-spouse` | `age_group` = `45-54`) ≈ 0.0189%
+
+- `age_group` = `55-64` 时：
+    - P(`marital-status` = `Married-civ-spouse` | `age_group` = `55-64`) ≈ 63.2166%
+    - P(`marital-status` = `Divorced` | `age_group` = `55-64`) ≈ 16.4679%
+    - P(`marital-status` = `Widowed` | `age_group` = `55-64`) ≈ 10.7734%
+    - P(`marital-status` = `Never-married` | `age_group` = `55-64`) ≈ 6.1177%
+    - P(`marital-status` = `Separated` | `age_group` = `55-64`) ≈ 2.3086%
+    - P(`marital-status` = `Married-spouse-absent` | `age_group` = `55-64`) ≈ 1.1158%
+    - P(`marital-status` = `Married-AF-spouse` | `age_group` = `55-64`) ≈ 0.0000%
+
+- `age_group` = `65-90` 时：
+    - P(`marital-status` = `Married-civ-spouse` | `age_group` = `65-90`) ≈ 55.0656%
+    - P(`marital-status` = `Widowed` | `age_group` = `65-90`) ≈ 25.2682%
+    - P(`marital-status` = `Divorced` | `age_group` = `65-90`) ≈ 8.8200%
+    - P(`marital-status` = `Never-married` | `age_group` = `65-90`) ≈ 8.1049%
+    - P(`marital-status` = `Separated` | `age_group` = `65-90`) ≈ 1.4303%
+    - P(`marital-status` = `Married-spouse-absent` | `age_group` = `65-90`) ≈ 1.3111%
+    - P(`marital-status` = `Married-AF-spouse` | `age_group` = `65-90`) ≈ 0.0000%
